@@ -1,18 +1,24 @@
 .area {
-    height: 100%;
+    height: 90vh;
     width: 100%;
     display: flex;
     
     .code {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
 
-        .text {
+        .text, .doc {
             width: 45vw;
-            height: 90vh;
+            height: 50%;
             margin: 10px;
             resize: none;
+            overflow: auto;
+
+            border: 1px solid black;
+
+            * {
+                margin: 0;
+            }
         }
     }
 
@@ -30,11 +36,17 @@
         align-self: center;
     }
 
-    .out {
-        height: 90vh;
+    .res-container {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        margin: 10px;
-        border: 1px solid black;
+
+        .out, .result {
+            height: 50%;
+            margin: 10px;
+            border: 1px solid black;
+            overflow: auto;
+        }
     }
 }
 

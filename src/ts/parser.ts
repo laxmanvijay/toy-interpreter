@@ -66,7 +66,7 @@ export class Parser {
         this.program();
 
         if (this.variablesDeclared.length > 0)
-            this.emitter.emitHeader(`float ${this.variablesDeclared.map((x) => x).join()}`);
+            this.emitter.emitHeader(`float ${this.variablesDeclared.map((x) => x).join()};`);
 
         this.emitter.emitAndAppendNewLine('return 0;');
         this.emitter.emitAndAppendNewLine('}');
@@ -86,16 +86,15 @@ export class Parser {
     /**
      * Statement supports seven different types of rules.
      *
-     * statement -> "PRINT" (expression | string) nl
-     *   | "IF" comparison "THEN" nl statement* "ENDIF" nl
-     *   | "WHILE" comparison "REPEAT" nl statement* "ENDWHILE" nl
-     *   | "LABEL" ident nl
-     *   | "GOTO" ident nl
-     *   | "LET" ident "=" expression nl
-     *   | "INPUT" ident nl
+     * statement -> "print" (expression | string) nl
+     *   | "if" comparison "THEN" nl statement* "ENDIF" nl
+     *   | "while" comparison "REPEAT" nl statement* "ENDWHILE" nl
+     *   | "label" ident nl
+     *   | "goto" ident nl
+     *   | "let" ident "=" expression nl
      */
     private statement(): void {
-        // statement -> "PRINT" (expression | string) nl
+        // statement -> "print" (expression | string) nl
         if (this.checkToken(TokenType.print)) {
             this.nextToken();
             this.matchAndMove([TokenType.STRING, TokenType.IDENT], false);
@@ -109,7 +108,7 @@ export class Parser {
                 this.emitter.emitAndAppendNewLine(`));`);
             }
         } else if (this.checkToken(TokenType.if)) {
-            // "IF" comparison "THEN" nl statement* "ENDIF" nl
+            // "if" comparison "then" nl statement* "endif" nl
             this.nextToken();
             this.emitter.emit('if(');
             this.comparison();
@@ -122,7 +121,7 @@ export class Parser {
             this.matchAndMove([TokenType.endif]);
             this.emitter.emitAndAppendNewLine('}');
         } else if (this.checkToken(TokenType.while)) {
-            // "WHILE" comparison "REPEAT" nl statement* "ENDWHILE" nl
+            // "while" comparison "repeat" nl statement* "endwhile" nl
             this.nextToken();
             this.emitter.emit('while(');
             this.comparison();
@@ -135,7 +134,7 @@ export class Parser {
             this.matchAndMove([TokenType.endwhile]);
             this.emitter.emitAndAppendNewLine('}');
         } else if (this.checkToken(TokenType.label)) {
-            // "LABEL" ident nl
+            // "label" ident nl
             this.nextToken();
 
             if (this.labelsDeclared.includes(this.currentToken.value))
@@ -145,7 +144,7 @@ export class Parser {
             this.emitter.emitAndAppendNewLine(this.currentToken.value + ':');
             this.matchAndMove([TokenType.IDENT]);
         } else if (this.checkToken(TokenType.goto)) {
-            // "GOTO" ident nl
+            // "goto" ident nl
             this.nextToken();
 
             this.labelsUsed.push(this.currentToken.value);
@@ -153,7 +152,7 @@ export class Parser {
             this.emitter.emitAndAppendNewLine('goto ' + this.currentToken.value + ';');
             this.matchAndMove([TokenType.IDENT]);
         } else if (this.checkToken(TokenType.let)) {
-            // "LET" ident "=" expression nl
+            // "let" ident "=" expression nl
             this.nextToken();
 
             if (!this.variablesDeclared.includes(this.currentToken.value))
