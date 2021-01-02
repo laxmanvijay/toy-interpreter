@@ -1,6 +1,15 @@
 export class Emitter {
     private header = '';
-    private code = '';
+    private _code = '';
+    public finalCode: string;
+
+    public get code(): string {
+        return this._code;
+    }
+    public set code(value: string) {
+        this._code = value;
+    }
+
     constructor(private element: HTMLDivElement) {}
 
     public emit(code: string): void {
@@ -16,7 +25,8 @@ export class Emitter {
     }
 
     public write(err?: boolean, errText?: string): void {
-        if (!err) this.element.innerHTML = this.header + this.code;
+        this.finalCode = this.header + this.code;
+        if (!err) this.element.innerHTML = this.finalCode;
         else this.element.innerHTML = `<p class='err'>${errText}</p>`;
     }
 }

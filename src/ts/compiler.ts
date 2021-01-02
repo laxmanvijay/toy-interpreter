@@ -6,6 +6,9 @@ import { Parser } from './parser';
 
 let program;
 const output = <HTMLDivElement>document.getElementById('out');
+const res = <HTMLDivElement>document.getElementById('result');
+const errColor = 'rgb(238, 192, 192)';
+
 let emitter: Emitter;
 
 document.getElementById('btn').addEventListener('click', () => {
@@ -22,6 +25,19 @@ document.getElementById('btn').addEventListener('click', () => {
 
         emitter.write();
 
+        const oldLog = console.log;
+        console.log = function (value: unknown) {
+            oldLog(value);
+            return value;
+        };
+
+        try {
+            res.innerHTML = eval(emitter.finalCode.replace(/<br>/g, ''));
+        } catch (err) {
+            res.innerHTML = `<p class='err'>${err}</p>`;
+            res.style.backgroundColor = errColor;
+        }
+
         // let tok = lexer.getToken();
         // console.log(tok);
 
@@ -32,7 +48,7 @@ document.getElementById('btn').addEventListener('click', () => {
         // }
     } catch (error) {
         emitter.write(true, error);
-        output.style.backgroundColor = 'rgb(238, 192, 192)';
+        output.style.backgroundColor = errColor;
         console.error(error);
     }
 });

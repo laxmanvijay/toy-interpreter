@@ -58,18 +58,12 @@ export class Parser {
     public parse(): void {
         console.log('parsing begun');
 
-        this.emitter.emitHeader('#include "stdio.h"');
-        this.emitter.emitHeader('int main(){');
-
         while (this.checkToken(TokenType.NEWLINE)) this.nextToken();
 
         this.program();
 
         if (this.variablesDeclared.length > 0)
-            this.emitter.emitHeader(`float ${this.variablesDeclared.map((x) => x).join()}`);
-
-        this.emitter.emitAndAppendNewLine('return 0;');
-        this.emitter.emitAndAppendNewLine('}');
+            this.emitter.emitHeader(`var ${this.variablesDeclared.map((x) => x).join()};`);
     }
 
     // program -> statement
@@ -98,15 +92,15 @@ export class Parser {
         // statement -> "PRINT" (expression | string) nl
         if (this.checkToken(TokenType.print)) {
             this.nextToken();
-            this.matchAndMove([TokenType.STRING, TokenType.IDENT], false);
+            this.matchAndMove([TokenType.STRING, TokenType.IDENT, TokenType.NUMBER], false);
 
             if (this.checkToken(TokenType.STRING)) {
-                this.emitter.emitAndAppendNewLine(`printf("${this.currentToken.value}\\n");`);
+                this.emitter.emitAndAppendNewLine(`console.log("${this.currentToken.value}\\n");`);
                 this.nextToken();
             } else {
-                this.emitter.emit(`printf("%" + ".2f\\n", (float)(`);
+                this.emitter.emit(`console.log(`);
                 this.expression();
-                this.emitter.emitAndAppendNewLine(`));`);
+                this.emitter.emitAndAppendNewLine(`);`);
             }
         } else if (this.checkToken(TokenType.if)) {
             // "IF" comparison "THEN" nl statement* "ENDIF" nl
@@ -134,24 +128,6 @@ export class Parser {
 
             this.matchAndMove([TokenType.endwhile]);
             this.emitter.emitAndAppendNewLine('}');
-        } else if (this.checkToken(TokenType.label)) {
-            // "LABEL" ident nl
-            this.nextToken();
-
-            if (this.labelsDeclared.includes(this.currentToken.value))
-                this.abort(`label redeclaration: ${this.currentToken.value}`);
-            else this.labelsDeclared.push(this.currentToken.value);
-
-            this.emitter.emitAndAppendNewLine(this.currentToken.value + ':');
-            this.matchAndMove([TokenType.IDENT]);
-        } else if (this.checkToken(TokenType.goto)) {
-            // "GOTO" ident nl
-            this.nextToken();
-
-            this.labelsUsed.push(this.currentToken.value);
-
-            this.emitter.emitAndAppendNewLine('goto ' + this.currentToken.value + ';');
-            this.matchAndMove([TokenType.IDENT]);
         } else if (this.checkToken(TokenType.let)) {
             // "LET" ident "=" expression nl
             this.nextToken();
