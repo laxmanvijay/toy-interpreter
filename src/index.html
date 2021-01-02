@@ -9,9 +9,64 @@
     <div class="area">
         <div class="code">
             <textarea name="text" id="text" class="text"></textarea>
+            <div class="doc">
+                <h2>Doc:</h2> <br>
+                This is a toy language made for learning. The interpreter utilizes newlines to seperate statements<br>
+                <h3>Variable declaration:</h3> <br>
+                <ul>
+                    <li>
+                        let {variable_name} = {value} <br>
+                    </li>
+                    <li>
+                        Example: let i = 10 <br>
+                    </li>
+                </ul>
+                Reassignment to variables also require the usage of let keyword.
+                <ul>
+                    <li>Example: let i = 10 <br> let i = i + 1</li>
+                </ul>
+                
+                <h3>Printing:</h3> <br>
+                    print {string or number or identifier} <br>
+                <ul>
+                    <li>Example: print "hello world"</li>
+                    <li>print 1+2</li>
+                    <li>print i</li>
+                </ul>
+                
+                <h3>if condition:</h3> <br>
+                The interpreter only supports if condition and no else keyword <br>
+
+                if {condition} then <br>
+                    statement <br>
+                endif <br>
+
+                <b>Example:</b> <br>
+
+                if i < 10 then <br>
+                    print i <br>
+                endif <br>
+
+                <h3>while loop:</h3> <br>
+
+                while {condition} repeat <br>
+                    statement <br>
+                endwhile <br>
+
+                <b>Example: </b> <br>
+
+                while i < 10 repeat <br>
+                print i<br>
+                i = i+1<br>
+                endwhile<br>
+
+            </div>
         </div>
-        <button class='btn' id="btn">evaluate -></button>
-        <div class="out" id='out'></div>
+        <button class='btn' id="btn">evaluate =></button>
+        <div class='res-container'>
+            <div class="out" id='out'></div>
+            <div class="result" id='result'></div>
+        </div>
     </div>
 </body>
 </html>
