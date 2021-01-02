@@ -14,7 +14,7 @@
             resize: none;
             overflow: auto;
 
-            border: 1px solid black;
+            border: 1px solid rgb(121, 121, 121);
 
             * {
                 margin: 0;
@@ -44,7 +44,7 @@
         .out, .result {
             height: 50%;
             margin: 10px;
-            border: 1px solid black;
+            border: 1px solid rgb(114, 114, 114);
             overflow: auto;
         }
     }

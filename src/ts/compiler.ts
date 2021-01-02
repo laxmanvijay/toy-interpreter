@@ -13,6 +13,7 @@ let emitter: Emitter;
 
 document.getElementById('btn').addEventListener('click', () => {
     try {
+        output.style.backgroundColor = 'white';
         program = (<HTMLInputElement>document.getElementById('text')).value;
 
         const lexer = new Lexer(program);
@@ -32,6 +33,7 @@ document.getElementById('btn').addEventListener('click', () => {
         };
 
         try {
+            res.style.backgroundColor = 'white';
             res.innerHTML = eval(emitter.finalCode.replace(/<br>/g, ''));
         } catch (err) {
             res.innerHTML = `<p class='err'>${err}</p>`;

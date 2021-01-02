@@ -80,16 +80,15 @@ export class Parser {
     /**
      * Statement supports seven different types of rules.
      *
-     * statement -> "PRINT" (expression | string) nl
-     *   | "IF" comparison "THEN" nl statement* "ENDIF" nl
-     *   | "WHILE" comparison "REPEAT" nl statement* "ENDWHILE" nl
-     *   | "LABEL" ident nl
-     *   | "GOTO" ident nl
-     *   | "LET" ident "=" expression nl
-     *   | "INPUT" ident nl
+     * statement -> "print" (expression | string) nl
+     *   | "if" comparison "THEN" nl statement* "ENDIF" nl
+     *   | "while" comparison "REPEAT" nl statement* "ENDWHILE" nl
+     *   | "label" ident nl
+     *   | "goto" ident nl
+     *   | "let" ident "=" expression nl
      */
     private statement(): void {
-        // statement -> "PRINT" (expression | string) nl
+        // statement -> "print" (expression | string) nl
         if (this.checkToken(TokenType.print)) {
             this.nextToken();
             this.matchAndMove([TokenType.STRING, TokenType.IDENT, TokenType.NUMBER], false);
@@ -103,7 +102,7 @@ export class Parser {
                 this.emitter.emitAndAppendNewLine(`);`);
             }
         } else if (this.checkToken(TokenType.if)) {
-            // "IF" comparison "THEN" nl statement* "ENDIF" nl
+            // "if" comparison "then" nl statement* "endif" nl
             this.nextToken();
             this.emitter.emit('if(');
             this.comparison();
@@ -116,7 +115,7 @@ export class Parser {
             this.matchAndMove([TokenType.endif]);
             this.emitter.emitAndAppendNewLine('}');
         } else if (this.checkToken(TokenType.while)) {
-            // "WHILE" comparison "REPEAT" nl statement* "ENDWHILE" nl
+            // "while" comparison "repeat" nl statement* "endwhile" nl
             this.nextToken();
             this.emitter.emit('while(');
             this.comparison();
@@ -129,7 +128,7 @@ export class Parser {
             this.matchAndMove([TokenType.endwhile]);
             this.emitter.emitAndAppendNewLine('}');
         } else if (this.checkToken(TokenType.let)) {
-            // "LET" ident "=" expression nl
+            // "let" ident "=" expression nl
             this.nextToken();
 
             if (!this.variablesDeclared.includes(this.currentToken.value))

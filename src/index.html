@@ -8,7 +8,7 @@
 <body>
     <div class="area">
         <div class="code">
-            <textarea name="text" id="text" class="text"></textarea>
+            <textarea name="text" id="text" class="text" autofocus></textarea>
             <div class="doc">
                 <h2>Doc:</h2> <br>
                 This is a toy language made for learning. The interpreter utilizes newlines to seperate statements<br>
@@ -64,8 +64,13 @@
         </div>
         <button class='btn' id="btn">evaluate =></button>
         <div class='res-container'>
-            <div class="out" id='out'></div>
-            <div class="result" id='result'></div>
+            <div class="out" id='out'>
+                <p>JS output:</p>
+            </div>
+            
+            <div class="result" id='result'>
+                <p>Result of execution:</p>
+            </div>
         </div>
     </div>
 </body>
