@@ -6,8 +6,6 @@
  * statement -> "print" (expression | string) nl
  *   | "if" comparison "then" nl statement* "endif" nl
  *   | "while" comparison "repeat" nl statement* "endwhile" nl
- *   | "label" ident nl
- *   | "goto" ident nl
  *   | "let" ident "=" expression nl
  * comparison -> expression (("==" | "!=" | ">" | ">=" | "<" | "<=") expression)+
  * expression -> term (( "-" | "+" ) term)*
@@ -83,8 +81,6 @@ export class Parser {
      * statement -> "print" (expression | string) nl
      *   | "if" comparison "THEN" nl statement* "ENDIF" nl
      *   | "while" comparison "REPEAT" nl statement* "ENDWHILE" nl
-     *   | "label" ident nl
-     *   | "goto" ident nl
      *   | "let" ident "=" expression nl
      */
     private statement(): void {
@@ -145,7 +141,7 @@ export class Parser {
             else this.abort(this.currentToken.value);
         }
 
-        // this.newLine();
+        this.newLine();
     }
 
     // comparison -> expression (("==" | "!=" | ">" | ">=" | "<" | "<=") expression)+
