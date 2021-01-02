@@ -1,0 +1,43 @@
+.area {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    
+    .code {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        .text {
+            width: 45vw;
+            height: 90vh;
+            margin: 10px;
+            resize: none;
+        }
+    }
+
+    .btn {
+        outline: none;
+        background-color: rgba(36, 113, 228, 0.918);
+        height: 3rem;
+        width: 16rem;
+        border: none;
+
+        font-size: 20px;
+        font-weight: 100;
+        color: white;
+
+        align-self: center;
+    }
+
+    .out {
+        height: 90vh;
+        width: 100%;
+        margin: 10px;
+        border: 1px solid black;
+    }
+}
+
+.err {
+    color: red;
+}

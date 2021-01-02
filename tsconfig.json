@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "module":"es6",
+      "target": "es5",
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "outDir": "dist",
+      "allowJs": true
+    },
+    "watchOptions": {
+      "watchFile": "useFsEvents",
+      "watchDirectory": "useFsEvents",
+  
+      "fallbackPolling": "dynamicPriority"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
